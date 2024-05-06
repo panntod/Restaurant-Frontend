@@ -11,24 +11,41 @@ export default function Modal({
   data?: any;
 }) {
   async function update(e: FormEvent<HTMLFormElement>) {
-    const result = await fetch_api("/food/" + data.id, {
-      body: new FormData(e.target as HTMLFormElement),
-    }).then((res) => res.json());
-    if (result.status) {
-      alert("Sukses update data");
-      setIsOpenModal(false);
-    } else alert(result.message);
+    e.preventDefault();
+    if (data) {
+      const result = await fetch_api("/food/" + data.id, {
+        method: "PUT",
+        body: new FormData(e.target as HTMLFormElement),
+      }).then((res) => res.json());
+      if (result.status) {
+        alert("Sukses update data");
+        setIsOpenModal(false);
+        window.location.reload();
+      } else alert(result.message);
+    } else {
+      const result = await fetch_api("/food/", {
+        method: "POST",
+        body: new FormData(e.target as HTMLFormElement),
+      }).then((res) => res.json());
+      if (result.status) {
+        alert("Sukses insert data");
+        setIsOpenModal(false);
+        window.location.reload();
+      } else alert(result.message);
+    }
   }
+
   return (
-    <div className="bg-gray-300/50 fixed w-full lg:w-[calc(100%-20rem)] z-10 justify-center items-center top-0 right-0 h-full m-auto">
+    <div className="bg-gray-300/50 fixed w-full z-10 justify-center items-center top-0 right-0 h-full m-auto">
       <div className="relative p-4 w-full h-full max-w-2xl max-h-full m-auto top-20">
         <div className="relative bg-white rounded-lg">
           <form onSubmit={update}>
             <div className="flex items-center justify-between p-4 md:p-5 border-b">
-              <H3>User Data</H3>
+              <H3>Menu</H3>
               <button
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all"
                 onClick={() => setIsOpenModal(false)}
+                type="button"
               >
                 X
               </button>
@@ -44,24 +61,61 @@ export default function Modal({
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
+                  type="text"
+                  placeholder="Nama menu"
+                  name="name"
+                  defaultValue={data?.name}
+                  required
                 />
               </div>
               <div>
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="email"
+                  htmlFor="image"
                 >
-                  Nama Menu
+                  Image
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
+                  id="image"
+                  type="file"
+                  placeholder="Upload gambar"
+                  name="image"
+                  required={!data}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="spicy_level"
+                >
+                  Spicy Level
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="spicy_level"
+                  type="text"
+                  placeholder="Not Spicy"
+                  name="spicy_level"
+                  required
+                  defaultValue={data?.spicy_level}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="price"
+                >
+                  Price
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="price"
+                  type="number"
+                  placeholder="Price"
+                  name="price"
+                  defaultValue={data?.price}
+                  required
                 />
               </div>
             </div>
@@ -70,7 +124,7 @@ export default function Modal({
                 className="px-3 py-2 rounded-md bg-blue-500 text-white"
                 type="submit"
               >
-                Login
+                Submit
               </button>
             </div>
           </form>

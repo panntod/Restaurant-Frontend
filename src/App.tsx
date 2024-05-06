@@ -9,6 +9,7 @@ import NotFound from "./views/NotFound";
 import Login from "./views/Login";
 
 import { getStatus } from "./utils/auth";
+import Transaksi from "./views/Transaksi";
 
 const App = () => {
   const status = getStatus();
@@ -21,8 +22,8 @@ const App = () => {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/about">
-            <About />
+          <Route path="/transaksi">
+            <Transaksi />
           </Route>
           <Route>
             <NotFound />

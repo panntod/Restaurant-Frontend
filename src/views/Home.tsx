@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { API_URL, fetch_api } from "../utils/auth";
+import Modal from "../components/Modal";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
 
+  const [modalData, setModalData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   function syncData() {
     fetch_api("/food/" + search)
       .then((res) => res.json())
       .then((res) => {
-        setData(res.data);
+        if (res.data) setData(res.data.reverse());
+        else alert("Failed fetching data");
       });
   }
   useEffect(() => {
@@ -35,6 +40,7 @@ const Home = () => {
     <React.Fragment>
       <Header title="Restoran ABC Menu" />
       <main>
+        {showModal && <Modal setIsOpenModal={setShowModal} data={modalData} />}
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {/* Replace with your content */}
           <div className="px-4 py-6 sm:px-0">
@@ -45,6 +51,15 @@ const Home = () => {
                 placeholder="search"
                 onChange={(e) => setSearch(e.target.value)}
               />
+              <button
+                onClick={() => {
+                  setModalData(null);
+                  setShowModal(true);
+                }}
+                className="py-2 px-4 rounded-md bg-blue-500 text-white"
+              >
+                Tambah
+              </button>
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -86,7 +101,13 @@ const Home = () => {
                         <td className="px-6 py-4">{item.spicy_level}</td>
                         <td className="px-6 py-4">{item.price}</td>
                         <td className="px-6 py-4 flex gap-2">
-                          <button className="py-2 px-4 rounded-md bg-green-500 text-white">
+                          <button
+                            onClick={() => {
+                              setModalData(item);
+                              setShowModal(true);
+                            }}
+                            className="py-2 px-4 rounded-md bg-green-500 text-white"
+                          >
                             Edit
                           </button>
                           <button

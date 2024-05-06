@@ -5,11 +5,11 @@ import { logout } from "../utils/auth";
 const Nav = ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  // const location = useLocation();
+  const location = useLocation();
 
   const links = [
     { text: "Home", to: "/" },
-    { text: "Transaks", to: "/transaksi" },
+    { text: "Transaksi", to: "/transaksi" },
   ];
 
   const activeClass = "text-white bg-gray-900";
