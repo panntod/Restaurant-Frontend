@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../components/Header";
-import { API_URL, fetch_api } from "../utils/auth";
+import { fetch_api } from "../utils/auth";
+import { getStatus } from "../utils/auth";
 
 const Transaksi = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = React.useState([]);
 
-  useEffect(() => {
+  const status = getStatus();
+  if (!status.isLoggedIn) window.location.href ="/login";
+
+  React.useEffect(() => {
     fetch_api("/order")
       .then((res) => res.json())
       .then((res) => {

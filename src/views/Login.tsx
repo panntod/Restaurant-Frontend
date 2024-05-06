@@ -1,9 +1,8 @@
-import React, { ChangeEvent, MouseEventHandler, useState } from "react";
-import Header from "../components/Header";
+import React, { ChangeEvent } from "react";
 import { login } from "../utils/auth";
 
 const Login = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = React.useState({
     email: "",
     password: "",
   });
@@ -18,9 +17,10 @@ const Login = () => {
 
     if (req.status) {
       alert("Success");
-      window.location.reload();
+      window.location.href = "/food"
     } else alert(req.message);
   };
+  
   return (
     <React.Fragment>
       <main>

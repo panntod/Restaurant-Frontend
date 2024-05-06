@@ -1,15 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import Nav from "./components/Nav";
-
-import Home from "./views/Home";
-import About from "./views/About";
-import NotFound from "./views/NotFound";
-import Login from "./views/Login";
+import { Switch, Route } from "react-router-dom";
 
 import { getStatus } from "./utils/auth";
+import Navbar from "./components/Navbar";
+
+import NotFound from "./views/NotFound";
 import Transaksi from "./views/Transaksi";
+import Login from "./views/Login";
+import Order from "./views/Order"
+import Food from "./views/Food";
+import Cart from "./views/Cart";
 
 const App = () => {
   const status = getStatus();
@@ -17,10 +17,10 @@ const App = () => {
   if (status.isLoggedIn) {
     return (
       <>
-        <Nav isLoggedIn />
+        <Navbar isLoggedIn />
         <Switch>
-          <Route exact path="/">
-            <Home />
+          <Route exact path="/food">
+            <Food />
           </Route>
           <Route path="/transaksi">
             <Transaksi />
@@ -34,8 +34,21 @@ const App = () => {
   } else {
     return (
       <>
-        <Nav />
-        <Login />
+        <Navbar />
+        <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/cart">
+            <Cart />
+          </Route>
+          <Route path="/">
+            <Order />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
       </>
     );
   }

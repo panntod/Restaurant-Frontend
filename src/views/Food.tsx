@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../components/Header";
 import { API_URL, fetch_api } from "../utils/auth";
 import Modal from "../components/Modal";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
+  const [data, setData] = React.useState([]);
+  const [search, setSearch] = React.useState("");
 
-  const [modalData, setModalData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = React.useState(null);
+  const [showModal, setShowModal] = React.useState(false);
 
   function syncData() {
     fetch_api("/food/" + search)
@@ -18,7 +18,8 @@ const Home = () => {
         else alert("Failed fetching data");
       });
   }
-  useEffect(() => {
+
+  React.useEffect(() => {
     syncData();
   }, [search]);
 
