@@ -1,0 +1,81 @@
+import { Dispatch, FormEvent, FormEventHandler, SetStateAction } from "react";
+import { fetch_api } from "../utils/auth";
+import React from "react";
+import { H3 } from "./Text";
+
+export default function Modal({
+  setIsOpenModal,
+  data,
+}: {
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
+  data?: any;
+}) {
+  async function update(e: FormEvent<HTMLFormElement>) {
+    const result = await fetch_api("/food/" + data.id, {
+      body: new FormData(e.target as HTMLFormElement),
+    }).then((res) => res.json());
+    if (result.status) {
+      alert("Sukses update data");
+      setIsOpenModal(false);
+    } else alert(result.message);
+  }
+  return (
+    <div className="bg-gray-300/50 fixed w-full lg:w-[calc(100%-20rem)] z-10 justify-center items-center top-0 right-0 h-full m-auto">
+      <div className="relative p-4 w-full h-full max-w-2xl max-h-full m-auto top-20">
+        <div className="relative bg-white rounded-lg">
+          <form onSubmit={update}>
+            <div className="flex items-center justify-between p-4 md:p-5 border-b">
+              <H3>User Data</H3>
+              <button
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all"
+                onClick={() => setIsOpenModal(false)}
+              >
+                X
+              </button>
+            </div>
+            <div className="p-4 md:p-5 space-y-4">
+              <div>
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="name"
+                >
+                  Nama Menu
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
+                  Nama Menu
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                />
+              </div>
+            </div>
+            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end">
+              <button
+                className="px-3 py-2 rounded-md bg-blue-500 text-white"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
