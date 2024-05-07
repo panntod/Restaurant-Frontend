@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Children } from "react";
 import Header from "../components/Header";
-import { API_URL, fetch_api } from "../utils/auth";
+import { api_url, fetch_api } from "../utils/auth";
 import Modal from "../components/Modal";
+import { toast } from "sonner";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
@@ -11,7 +12,7 @@ const Home = () => {
   const [showModal, setShowModal] = React.useState(false);
 
   function syncData() {
-    fetch_api("/food/" + search)
+    fetch_api("/food/find/" + search)
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
@@ -20,30 +21,47 @@ const Home = () => {
   }
 
   React.useEffect(() => {
-    syncData();
+    if (search === "") {
+      initData();
+    } else {
+      syncData();
+    }
   }, [search]);
 
-  async function deleteMenu(id: number) {
-    if (!confirm("Apakah Anda yakin ingin menghapus data ini?")) return;
-    const req = await fetch_api("/food/" + id, { method: "DELETE" }).then(
-      (res) => res.json()
-    );
+  function initData() {
+    fetch_api("/food/")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.data) setData(res.data.reverse());
+        else toast.error("Failed fetching data");
+      })
+  }
 
-    if (req.status) {
-      alert("Sukses delete data");
-      syncData();
-    } else {
-      alert("Gagal menghapus menu");
-    }
+  React.useEffect(() => {
+    initData()
+  }, []);
+
+  async function deleteMenu(id: number) {
+    if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+      const req = await fetch_api("/food/" + id, { method: "DELETE" }).then(
+        (res) => res.json()
+      );
+
+      if (req.success) {
+        toast.success("Sukses delete data");
+        initData();
+      } else {
+        toast.error("Gagal menghapus menu");
+      }
+    };
   }
 
   return (
     <React.Fragment>
-      <Header title="Restoran ABC Menu" />
+      <Header title="Sentolove Menu" />
       <main>
         {showModal && <Modal setIsOpenModal={setShowModal} data={modalData} />}
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {/* Replace with your content */}
           <div className="px-4 py-6 sm:px-0">
             <div className="relative overflow-x-auto">
               <input
@@ -57,7 +75,7 @@ const Home = () => {
                   setModalData(null);
                   setShowModal(true);
                 }}
-                className="py-2 px-4 rounded-md bg-blue-500 text-white"
+                className="py-2 px-4 mb-4 rounded-full bg-blue-500 text-white"
               >
                 Tambah
               </button>
@@ -98,7 +116,7 @@ const Home = () => {
                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
                             <img
-                              src={`${API_URL}/uploaded/${item.image}`}
+                              src={`${api_url}/images/${item.image}`}
                               className="w-24"
                               alt="Image"
                             />
@@ -129,7 +147,6 @@ const Home = () => {
               </table>
             </div>
           </div>
-          {/* /End replace */}
         </div>
       </main>
     </React.Fragment>

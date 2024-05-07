@@ -2,6 +2,7 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { fetch_api } from "../utils/auth";
 import React from "react";
 import { H3 } from "./Text";
+import { toast } from "sonner";
 
 export default function Modal({
   setIsOpenModal,
@@ -12,26 +13,27 @@ export default function Modal({
 }) {
   async function update(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    
     if (data) {
       const result = await fetch_api("/food/" + data.id, {
         method: "PUT",
         body: new FormData(e.target as HTMLFormElement),
       }).then((res) => res.json());
       if (result.status) {
-        alert("Sukses update data");
+        toast.success("Sukses update data");
         setIsOpenModal(false);
         window.location.reload();
-      } else alert(result.message);
+      } else toast.error(result.message);
     } else {
       const result = await fetch_api("/food/", {
         method: "POST",
         body: new FormData(e.target as HTMLFormElement),
       }).then((res) => res.json());
       if (result.status) {
-        alert("Sukses insert data");
+        toast.success("Sukses insert data");
         setIsOpenModal(false);
         window.location.reload();
-      } else alert(result.message);
+      } else toast.error(result.message);
     }
   }
 

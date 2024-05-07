@@ -1,6 +1,7 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { getStatus } from "../utils/auth";
 import { login } from "../utils/auth";
+import { toast } from "sonner";
 
 const Login = () => {
   const status = getStatus();
@@ -10,36 +11,32 @@ const Login = () => {
     password: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
-    const req = await login(form.email, form.password);
+    const response = await login(form.email, form.password);
 
-    if (!form.email || !form.password) return alert("Value cannot be empty");
+    if (!form.email || !form.password) return toast.info("Value cannot be empty");
 
-    if (req.status) {
-      alert("Success");
+    if (response.status) {
       window.location.href = "/food";
-    } else alert(req.message);
+    } else toast.error(response.message);
   };
 
   return (
     <React.Fragment>
       <main>
-        <div className="max-w-7xl m-auto py-6 sm:px-6 lg:px-8 min-h-full">
-          {/* Replace with your content */}
-          <div className="px-4 py-6 sm:px-0 max-w-xl m-auto">
-            <div className="border-4 border-separate border-gray-200 rounded-lg p-4 text-center text-gray-400">
+        <div className="max-w-2xl mx-auto py-6 sm:px-6 lg:px-8 min-h-[80vh] flex justify-center items-center">
+          <div className="w-full sm:w-96 p-8 bg-white rounded-lg shadow-md">
+            <h2 className="text-center text-2xl font-bold text-gray-800 mb-8">Login</h2>
+            <form>
               <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="email"
-                >
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                   Email
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
                   id="email"
                   type="email"
                   placeholder="Email"
@@ -47,33 +44,30 @@ const Login = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
                   id="password"
                   type="password"
-                  placeholder="*******"
+                  placeholder="*********"
                   name="password"
                   onChange={handleChange}
                 />
               </div>
               <button
-                className="px-3 py-2 rounded-md bg-blue-500 text-white"
+                className="w-full px-3 py-2 rounded-md bg-blue-500 text-white font-semibold focus:outline-none focus:bg-blue-600"
                 type="button"
                 onClick={submit}
               >
                 Login
               </button>
-            </div>
+            </form>
           </div>
-          {/* /End replace */}
         </div>
+
       </main>
     </React.Fragment>
   );

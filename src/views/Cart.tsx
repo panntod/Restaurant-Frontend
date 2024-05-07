@@ -3,6 +3,7 @@ import List from "../components/List";
 import { Link } from "react-router-dom";
 import { P } from "../components/Text";
 import { fetch_api } from "../utils/auth";
+import { toast } from "sonner";
 
 const Cart = () => {
   const [data, setData] = React.useState([]);
@@ -27,10 +28,10 @@ const Cart = () => {
 
   function syncData() {
     fetch_api("/food/")
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.data) {
-          setData(res.data.reverse());
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.data) {
+          setData(response.data.reverse());
         } else alert("Failed fetching data");
       });
   }
@@ -76,28 +77,29 @@ const Cart = () => {
         }),
     };
     console.log(body);
-    const res = await fetch_api("/order", {
+    const response = await fetch_api("/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    }).then((res) => res.json());
+    }).then((response) => response.json());
 
-    if (res.status) {
-      localStorage.setItem("cart", "[]");
-      alert("Order success");
+    if (response.status) {
+      localStorage.removeItem("cart");
+      toast.success("Order success");
       window.location.href = "/";
-    } else alert(res.message);
+    } else toast.error(response.message);
   }
   return (
     <React.Fragment>
-      <Link to="/" className="font-semibold text-lg m-12 hover:text-gray-700">
+      <Link to="/" className="font-semibold text-lg ml-20 my-10 hover:text-gray-700">
         &lt; Choose Menu
       </Link>
       <div className="flex justify-center min-h-full px-8">
         <List count={count} setCount={setCount} data={data} />
-        <div className="border border-separate border-gray-400 w-2/5 p-8">
+
+        <div className="border border-separate border-black rounded-md w-2/5 p-8 shadow-lg">
           <P className="font-bold">Customer Information</P>
           <div className="mb-4 flex justify-between gap-2 mt-4">
             <label
@@ -110,7 +112,7 @@ const Cart = () => {
               className="max-w-[300px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="customer_name"
               type="text"
-              placeholder="Ujang"
+              placeholder="Pandhu"
               name="customer_name"
               onChange={handleChange}
             />
@@ -127,6 +129,7 @@ const Cart = () => {
               id="table_number"
               type="number"
               placeholder="0"
+              min="0"
               name="table_number"
               onChange={handleChange}
             />
@@ -146,7 +149,7 @@ const Cart = () => {
             <P>{formatter.format((total * 10) / 100 + total)}</P>
           </div>
           <button
-            className="px-3 py-2 rounded-md bg-green-500 text-white mt-4 w-full"
+            className="px-3 py-2 rounded-md bg-green-500 hover:bg-green-600 text-white mt-4 w-full focus:outline-none"
             type="button"
             onClick={() => checkout()}
           >

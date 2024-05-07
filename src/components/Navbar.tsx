@@ -10,7 +10,7 @@ const Nav = ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
     { text: "Transaksi", to: "/transaksi" },
   ];
 
-  const activeClass = "text-white bg-gray-900";
+  const activeClass = "text-white bg-gray-700";
   const inactiveClass = "text-gray-300 hover:text-white hover:bg-gray-700";
 
   return (
@@ -19,14 +19,14 @@ const Nav = ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center justify-between w-full">
             <div className="flex-shrink-0 text-white font-bold flex gap-4">
-              <Link to="/">Restoran ABC</Link>
+              <Link to="/">Sentolove</Link>
               <div>
                 {isLoggedIn &&
                   links.map((link) => (
                     <Link
                       key={link.text}
                       to={link.to}
-                      className={`px-3 py-2 rounded-md text-sm font-medium ${
+                      className={`mx-2 px-4 py-2 rounded-md text-sm font-medium ${
                         location.pathname === link.to
                           ? activeClass
                           : inactiveClass
@@ -43,7 +43,7 @@ const Nav = ({ isLoggedIn }: { isLoggedIn?: boolean }) => {
                   <>
                     <div>
                       <button
-                        className="text-white max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        className="text-white max-w-xs bg-gray-800 rounded flex items-center text-sm hover:bg-red-600 px-4 py-2"
                         id="user-menu"
                         aria-label="User menu"
                         aria-haspopup="true"

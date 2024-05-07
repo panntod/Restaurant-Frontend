@@ -1,7 +1,7 @@
-export const API_URL = "http://localhost:3000";
+export const api_url = "http://localhost:8000";
 
 export const login = async (email: string, password: string) => {
-  const req = await fetch(API_URL + "/admin/auth", {
+  const response = await fetch(api_url + "/admin/auth", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,9 +9,9 @@ export const login = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   }).then((res) => res.json());
 
-  if (req.status) localStorage.setItem("token", req.token);
+  if (response.status) localStorage.setItem("token", response.token);
 
-  return req;
+  return response;
 };
 
 export const getStatus = () => {
@@ -37,7 +37,7 @@ export const logout = () => {
 
 export const fetch_api = (url: RequestInfo | URL, init?: RequestInit) => {
   const token = localStorage.getItem("token");
-  return fetch(API_URL + url, {
+  return fetch(api_url + url, {
     headers: {
       authorization: "Bearer " + token,
       ...init?.headers,
