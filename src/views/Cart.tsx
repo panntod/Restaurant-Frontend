@@ -3,7 +3,7 @@ import List from "../components/List";
 import { Link } from "react-router-dom";
 import { P } from "../components/Text";
 import { fetch_api } from "../utils/auth";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const Cart = () => {
   const [data, setData] = React.useState([]);

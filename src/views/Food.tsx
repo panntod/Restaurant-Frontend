@@ -2,7 +2,7 @@ import React, { Children } from "react";
 import Header from "../components/Header";
 import { api_url, fetch_api } from "../utils/auth";
 import Modal from "../components/Modal";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
@@ -12,7 +12,7 @@ const Home = () => {
   const [showModal, setShowModal] = React.useState(false);
 
   function syncData() {
-    fetch_api("/food/find/" + search)
+    fetch_api("/food/" + search)
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
@@ -29,7 +29,7 @@ const Home = () => {
   }, [search]);
 
   function initData() {
-    fetch_api("/food/")
+    fetch_api("/food/get/")
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());

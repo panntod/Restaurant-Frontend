@@ -2,7 +2,7 @@ import { Dispatch, FormEvent, SetStateAction } from "react";
 import { fetch_api } from "../utils/auth";
 import React from "react";
 import { H3 } from "./Text";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 export default function Modal({
   setIsOpenModal,
@@ -11,30 +11,21 @@ export default function Modal({
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
   data?: any;
 }) {
+
   async function update(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
-    if (data) {
-      const result = await fetch_api("/food/" + data.id, {
-        method: "PUT",
-        body: new FormData(e.target as HTMLFormElement),
-      }).then((res) => res.json());
-      if (result.status) {
-        toast.success("Sukses update data");
-        setIsOpenModal(false);
-        window.location.reload();
-      } else toast.error(result.message);
-    } else {
-      const result = await fetch_api("/food/", {
-        method: "POST",
-        body: new FormData(e.target as HTMLFormElement),
-      }).then((res) => res.json());
-      if (result.status) {
-        toast.success("Sukses insert data");
-        setIsOpenModal(false);
-        window.location.reload();
-      } else toast.error(result.message);
-    }
+
+    const api = data ? `/food/${data.id}` : `/food/`
+    const method = data ? "PUT" : "POST"
+
+    const result = await fetch_api(api, {
+      method: method,
+      body: new FormData(e.target as HTMLFormElement),
+    }).then((res) => res.json());
+    if (result.success) {
+      toast.success(`Success ${data ? "update" : "insert"} data`);
+      setIsOpenModal(false);
+    } else toast.error(result.message);
   }
 
   return (
@@ -43,7 +34,7 @@ export default function Modal({
         <div className="relative bg-white rounded-lg">
           <form onSubmit={update}>
             <div className="flex items-center justify-between p-4 md:p-5 border-b">
-              <H3>Menu</H3>
+              <H3>{data ? "Update Menu" : "Create Menu"}</H3>
               <button
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all"
                 onClick={() => setIsOpenModal(false)}

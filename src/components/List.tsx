@@ -2,7 +2,7 @@ import React from "react";
 
 import { H4, P } from "./Text";
 import { api_url } from "../utils/auth";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 function Order({
   count,

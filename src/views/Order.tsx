@@ -1,14 +1,15 @@
 import React from "react";
 import Header from "../components/Header";
-import { fetch_api } from "../utils/auth";
 import Card from "../components/Card";
+
+import { fetch_api } from "../utils/auth";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
   const [search, setSearch] = React.useState("");
 
   function syncData() {
-    fetch_api("/food/find/" + search)
+    fetch_api("/food/" + search)
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
@@ -25,7 +26,7 @@ const Home = () => {
   }, [search]);
 
   function initData() {
-    fetch_api("/food/")
+    fetch_api("/food/get/")
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());

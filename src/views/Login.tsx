@@ -1,7 +1,7 @@
 import React from "react";
 import { getStatus } from "../utils/auth";
 import { login } from "../utils/auth";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const status = getStatus();

@@ -9,9 +9,9 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^5.2.1",
     "remove": "^0.1.5",
-    "sonner": "^1.4.41",
     "sooner": "^1.1.4"
   },
   "devDependencies": {
