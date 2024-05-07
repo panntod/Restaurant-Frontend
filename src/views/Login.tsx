@@ -17,7 +17,7 @@ const Login = () => {
   const submit = async (e: React.MouseEvent<HTMLElement>) => {
     const response = await login(form.email, form.password);
 
-    if (!form.email || !form.password) return toast.info("Value cannot be empty");
+    if (!form.email || !form.password) return toast.error("Value cannot be empty");
 
     if (response.status) {
       window.location.href = "/food";

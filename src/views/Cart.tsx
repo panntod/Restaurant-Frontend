@@ -27,7 +27,7 @@ const Cart = () => {
   }
 
   function syncData() {
-    fetch_api("/food/")
+    fetch_api("/food/get/")
       .then((response) => response.json())
       .then((response) => {
         if (response.data) {
@@ -45,9 +45,11 @@ const Cart = () => {
     console.log(data);
     setTotal(priceTotal);
   }
+
   React.useEffect(() => {
     updatePrice();
   }, [count, data]);
+
   React.useEffect(() => {
     getCart();
     syncData();
@@ -59,7 +61,7 @@ const Cart = () => {
   async function checkout() {
     if (count.length == 0) return alert("Cart can't be empty");
     if (form.customer_name == "" || form.table_number == "")
-      return alert("Please input customer information");
+      return toast.error("Please input customer information");
 
     const body = {
       customer_name: form.customer_name,

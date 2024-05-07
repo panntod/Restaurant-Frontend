@@ -33,10 +33,10 @@ export default function Modal({
       <div className="relative p-4 w-full h-full max-w-2xl max-h-full m-auto top-20">
         <div className="relative bg-white rounded-lg">
           <form onSubmit={update}>
-            <div className="flex items-center justify-between p-4 md:p-5 border-b">
+            <div className="flex items-center justify-between px-4  md:p-5 border-b">
               <H3>{data ? "Update Menu" : "Create Menu"}</H3>
               <button
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all"
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-3 ml-auto inline-flex items-center transition-all"
                 onClick={() => setIsOpenModal(false)}
                 type="button"
               >

@@ -75,7 +75,7 @@ const Home = () => {
                   setModalData(null);
                   setShowModal(true);
                 }}
-                className="py-2 px-4 mb-4 rounded-full bg-blue-500 text-white"
+                className="py-2 px-4 mb-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white"
               >
                 Tambah
               </button>
@@ -123,19 +123,19 @@ const Home = () => {
                           </td>
                           <td className="px-6 py-4">{item.spicy_level}</td>
                           <td className="px-6 py-4">{item.price}</td>
-                          <td className="px-6 py-4 flex gap-2">
+                          <td className="px-6 py-4 flex h-full gap-2">
                             <button
                               onClick={() => {
                                 setModalData(item);
                                 setShowModal(true);
                               }}
-                              className="py-2 px-4 rounded-md bg-green-500 text-white"
+                              className="py-2 px-6 rounded-full bg-green-600 hover:bg-green-500 text-white"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => deleteMenu(item.id)}
-                              className="py-2 px-4 rounded-md bg-red-500 text-white"
+                              className="py-2 px-6 rounded-full bg-red-600 hover:bg-red-500 text-white"
                             >
                               Hapus
                             </button>
