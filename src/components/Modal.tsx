@@ -40,7 +40,7 @@ export default function Modal({
                 onClick={() => setIsOpenModal(false)}
                 type="button"
               >
-                X
+                x
               </button>
             </div>
             <div className="p-4 md:p-5 space-y-4">
@@ -114,7 +114,7 @@ export default function Modal({
             </div>
             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end">
               <button
-                className="px-3 py-2 rounded-md bg-blue-500 text-white"
+                className="px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white"
                 type="submit"
               >
                 Submit

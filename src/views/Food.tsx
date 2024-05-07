@@ -16,7 +16,7 @@ const Home = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
-        else alert("Failed fetching data");
+        else toast.error("Menu not found");
       });
   }
 

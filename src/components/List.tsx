@@ -67,7 +67,7 @@ function Order({
   return (
     <section className="w-3/5 mx-12">
       <H4 className="mb-6">Order Details</H4>
-      <section className="w-full px-12 py-6 border border-black rounded-md">
+      <section className="w-full px-12 py-6 border rounded-md bg-white">
 
         <table className="w-full">
           <thead>

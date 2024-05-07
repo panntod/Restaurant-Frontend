@@ -101,7 +101,7 @@ const Cart = () => {
       <div className="flex justify-center min-h-full px-8">
         <List count={count} setCount={setCount} data={data} />
 
-        <div className="border border-separate border-black rounded-md w-2/5 p-8 shadow-lg">
+        <div className="border border-separate rounded-md w-2/5 p-8 shadow-lg bg-white">
           <P className="font-bold">Customer Information</P>
           <div className="mb-4 flex justify-between gap-2 mt-4">
             <label
@@ -136,7 +136,7 @@ const Cart = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="border-b border-separate border-black"></div>
+          <div className="border-b border-separate"></div>
           <P className="font-bold">Order Summary</P>
           <div className="w-full flex justify-between mt-8">
             <P>Items ({count.reduce((a, b: any) => a + b.count, 0)})</P>
