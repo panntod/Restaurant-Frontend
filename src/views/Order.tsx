@@ -8,9 +8,6 @@ const Home = () => {
   const [data, setData] = React.useState([]);
   const [search, setSearch] = React.useState("");
 
-  const [modalData, setModalData] = React.useState(null);
-  const [showModal, setShowModal] = React.useState(false);
-
   function syncData() {
     fetch_api("/food/" + search)
       .then((res) => res.json())
@@ -19,17 +16,15 @@ const Home = () => {
         else alert("Failed fetching data");
       });
   }
-  
+
   React.useEffect(() => {
     syncData();
   }, [search]);
-
 
   return (
     <React.Fragment>
       <Header title="Food Ordering System" />
       <main>
-        {showModal && <Modal setIsOpenModal={setShowModal} data={modalData} />}
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {/* Replace with your content */}
           <div className="px-4 py-6 sm:px-0">

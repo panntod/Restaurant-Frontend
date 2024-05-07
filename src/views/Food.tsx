@@ -82,45 +82,49 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item: any, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                      >
-                        <td className="px-6 py-4">{item.name}</td>
-                        <td
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {data
+                    .filter((item: any) =>
+                      item.price.toString().includes(search)
+                    )
+                    .map((item: any, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                         >
-                          <img
-                            src={`${API_URL}/uploaded/${item.image}`}
-                            className="w-24"
-                            alt="Image"
-                          />
-                        </td>
-                        <td className="px-6 py-4">{item.spicy_level}</td>
-                        <td className="px-6 py-4">{item.price}</td>
-                        <td className="px-6 py-4 flex gap-2">
-                          <button
-                            onClick={() => {
-                              setModalData(item);
-                              setShowModal(true);
-                            }}
-                            className="py-2 px-4 rounded-md bg-green-500 text-white"
+                          <td className="px-6 py-4">{item.name}</td>
+                          <td
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => deleteMenu(item.id)}
-                            className="py-2 px-4 rounded-md bg-red-500 text-white"
-                          >
-                            Hapus
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            <img
+                              src={`${API_URL}/uploaded/${item.image}`}
+                              className="w-24"
+                              alt="Image"
+                            />
+                          </td>
+                          <td className="px-6 py-4">{item.spicy_level}</td>
+                          <td className="px-6 py-4">{item.price}</td>
+                          <td className="px-6 py-4 flex gap-2">
+                            <button
+                              onClick={() => {
+                                setModalData(item);
+                                setShowModal(true);
+                              }}
+                              className="py-2 px-4 rounded-md bg-green-500 text-white"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => deleteMenu(item.id)}
+                              className="py-2 px-4 rounded-md bg-red-500 text-white"
+                            >
+                              Hapus
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

@@ -1,7 +1,10 @@
 import React, { ChangeEvent } from "react";
+import { getStatus } from "../utils/auth";
 import { login } from "../utils/auth";
 
 const Login = () => {
+  const status = getStatus();
+  if (status.isLoggedIn) window.location.href = "/food";
   const [form, setForm] = React.useState({
     email: "",
     password: "",
@@ -17,10 +20,10 @@ const Login = () => {
 
     if (req.status) {
       alert("Success");
-      window.location.href = "/food"
+      window.location.href = "/food";
     } else alert(req.message);
   };
-  
+
   return (
     <React.Fragment>
       <main>

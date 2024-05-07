@@ -1,28 +1,21 @@
 import React from "react";
 
-import { H2 } from "./Text";
+import { H4, P } from "./Text";
+import { API_URL } from "../utils/auth";
 
-function Order() {
-  const [data, setData] = React.useState([]);
-  const [count, setCount] = React.useState(0);
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'IDR',
+function Order({
+  count,
+  setCount,
+  data,
+}: {
+  count: any;
+  setCount: React.Dispatch<React.SetStateAction<any>>;
+  data: any;
+}) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "IDR",
   });
-
-  async function getCart() {
-    const storage = localStorage.getItem("cart");
-
-    const cart = storage ? JSON.parse(storage) : [];
-    // const indexCart = cart.findIndex((item: any) => item.id == 0);
-    // if (indexCart != -1) {
-    //   setCount(cart[indexCart].count);
-    // }
-  }
-
-  React.useEffect(() => {
-    getCart()
-  }, [])
 
   function updateCart(id: number, type: "increase" | "decrease") {
     const storage = localStorage.getItem("cart");
@@ -34,26 +27,43 @@ function Order() {
     if (indexCart == -1 && type == "increase") {
       cart.push({
         id,
-        count: 1
-      })
-      setCount(count + 1);
+        count: 1,
+      });
+      setCount(cart);
     } else if (indexCart != -1) {
       if (type == "increase") {
         cart[indexCart].count++;
-        setCount(count + 1);
+        setCount(cart);
       } else {
-        if (count <= 0) return;
-        cart[indexCart].count--;
-        setCount(count - 1);
+        if (cart[indexCart].count <= 1) {
+          if (!confirm("Apakah Anda yakin ingin menghapus?")) return;
+          cart.splice(indexCart, 1);
+          setCount(cart);
+        } else {
+          cart[indexCart].count--;
+          setCount(cart);
+        }
       }
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 
+  function deleteItem(index: number) {
+    if (!confirm("Apakah Anda yakin ingin menghapus?")) return;
+    const storage = localStorage.getItem("cart");
+    if (!storage) localStorage.setItem("cart", "[]");
+
+    const cart = storage ? JSON.parse(storage) : [];
+
+    cart.splice(index, 1);
+    setCount(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
   return (
-    <section className="p-12 w-full card-body">
-      <H2 className="mb-6">Order Details</H2>
+    <section className="w-3/5 card-body">
+      <H4 className="mb-6">Order Details</H4>
       <table className="w-full">
         <thead>
           <tr>
@@ -64,26 +74,52 @@ function Order() {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {data.length &&
+            count
+              .filter((x: any) => x.count > 0)
+              .map((item: any, index: any) => {
+                const food = data.find((x: any) => x.id == item.id);
+                return (
+                  <tr>
+                    <td className="flex gap-6 items-center">
+                      <img
+                        src={API_URL + "/uploaded/" + food.image}
+                        alt=""
+                        className="w-[100px] h-[60px]"
+                      />
+                      <div className="flex flex-col gap-2">
+                        <P className="font-semibold">{food.name}</P>
+                        <div className="flex justify-end items-center gap-4">
+                          <button
+                            onClick={() => updateCart(item.id, "decrease")}
+                            className="w-8 h-8 font-semibold rounded-full bg-red-500 hover:bg-red-400"
+                          >
+                            -
+                          </button>
+                          {item.count}
+                          <button
+                            onClick={() => updateCart(item.id, "increase")}
+                            className="w-8 h-8 font-semibold rounded-full bg-green-600 hover:bg-green-500"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </td>
 
-            <td className="flex gap-6 align-items-center ">
-              <img
-                src="https://via.placeholder.com/600x500"
-                alt=""
-                className="w-[100px] h-[60px]"
-              />
-              <div className="flex justify-end items-center gap-4">
-                <button onClick={() => updateCart(0, "decrease")} className="w-8 h-8 font-semibold rounded-full bg-red-500 hover:bg-red-400">-</button>
-                {count}
-                <button onClick={() => updateCart(0, "increase")} className="w-8 h-8 font-semibold rounded-full bg-green-600 hover:bg-green-500">+</button>
-              </div>
-            </td>
-
-            <td>{formatter.format(30000)}</td>
-            <td>{formatter.format(30000)}</td>
-            <td><button className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 text-white">Delete</button>
-            </td>
-          </tr>
+                    <td>{formatter.format(food.price)}</td>
+                    <td>{formatter.format(food.price * item.count)}</td>
+                    <td>
+                      <button
+                        onClick={() => deleteItem(index)}
+                        className="py-2 px-4 rounded-md bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
         </tbody>
       </table>
     </section>
