@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import { fetch_api } from "../utils/auth";
 import { getStatus } from "../utils/auth";
+import toast from "react-hot-toast";
 
 const Transaksi = () => {
   const [data, setData] = React.useState([]);
@@ -14,7 +15,7 @@ const Transaksi = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
-        else alert("Failed fetching data");
+        else toast.error("Failed fetching data");
       });
   }, []);
 

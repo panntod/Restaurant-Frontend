@@ -32,7 +32,7 @@ const Cart = () => {
       .then((response) => {
         if (response.data) {
           setData(response.data.reverse());
-        } else alert("Failed fetching data");
+        } else toast.error("Failed fetching data");
       });
   }
 
@@ -59,7 +59,7 @@ const Cart = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   async function checkout() {
-    if (count.length == 0) return alert("Cart can't be empty");
+    if (count.length == 0) return toast.error("Cart can't be empty");
     if (form.customer_name == "" || form.table_number == "")
       return toast.error("Please input customer information");
 

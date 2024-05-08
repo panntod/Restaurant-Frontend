@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Card from "../components/Card";
 
 import { fetch_api } from "../utils/auth";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
@@ -13,7 +14,7 @@ const Home = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
-        else alert("Failed fetching data");
+        else toast.error("Failed fetching data");
       });
   }
 
@@ -30,7 +31,7 @@ const Home = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.data) setData(res.data.reverse());
-        else alert("Failed fetching data");
+        else toast.error("Failed fetching data");
       })
   }
 

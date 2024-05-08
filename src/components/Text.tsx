@@ -19,11 +19,7 @@ export function H1({ children, className }: Readonly<TextProps>) {
 }
 
 export function P({ children, className }: Readonly<TextProps>) {
-  return <p className={"text-neutral-500 " + className}>{children}</p>;
-}
-
-export function Pblk({ children, className }: Readonly<TextProps>) {
-  return <p className={"text-black " + className}>{children}</p>;
+  return <p className={className}>{children}</p>;
 }
 
 export function Li({ children, className }: Readonly<TextProps>) {
