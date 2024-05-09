@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import { fetch_api } from "../utils/auth";
-import { getStatus } from "../utils/auth";
+import { fetch_api, getStatus } from "../utils/auth";
 import toast from "react-hot-toast";
 
 const Transaksi = () => {
@@ -14,7 +13,7 @@ const Transaksi = () => {
     fetch_api("/order/")
       .then((res) => res.json())
       .then((res) => {
-        if (res.data) setData(res.data.reverse());
+        if (res.data) setData(res.data?.reverse());
         else toast.error("Failed fetching data");
       });
   }, []);
@@ -66,7 +65,7 @@ const Transaksi = () => {
                               (order: any, index: number) => {
                                 return (
                                   <li key={index}>
-                                    {order.Food.name} ({order.qty})
+                                    {order.Food?.name} ({order.qty})
                                   </li>
                                 );
                               }

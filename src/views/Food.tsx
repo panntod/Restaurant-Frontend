@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import Header from "../components/Header";
 import { api_url, fetch_api } from "../utils/auth";
 import Modal from "../components/Modal";

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import List from "../components/List";
 import { Link } from "react-router-dom";
 import { P } from "../components/Text";
@@ -55,7 +55,7 @@ const Cart = () => {
     syncData();
   }, []);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   async function checkout() {
@@ -78,7 +78,7 @@ const Cart = () => {
           };
         }),
     };
-    console.log(body);
+    
     const response = await fetch_api("/order", {
       method: "POST",
       headers: {
