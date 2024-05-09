@@ -8,7 +8,7 @@ import "./index.css";
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Toaster position="top-center"/>
+      <Toaster position="top-right"/>
       <App />
     </Router>
   </React.StrictMode>,

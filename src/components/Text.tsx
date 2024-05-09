@@ -8,11 +8,7 @@ interface TextProps {
 
 export function H1({ children, className }: Readonly<TextProps>) {
   return (
-    <h1
-      className={
-        "text-[36px] font-bold leading-[140%] sm:text-[44px] " + className
-      }
-    >
+    <h1 className={"text-[36px] font-bold leading-[140%] sm:text-[44px] " + className}>
       {children}
     </h1>
   );
@@ -28,12 +24,7 @@ export function Li({ children, className }: Readonly<TextProps>) {
 
 export function H2({ children, className }: Readonly<TextProps>) {
   return (
-    <h2
-      className={
-        "text-[24px] md:text-4xl md:leading-[120%] font-bold text-black " +
-        className
-      }
-    >
+    <h2 className={"text-[24px] md:text-4xl md:leading-[120%] font-bold text-black " + className}>
       {children}
     </h2>
   );
