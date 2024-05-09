@@ -24,8 +24,7 @@ function Card({ data }: { data: any }) {
     }, [])
 
     function updateCart(id: number, type: "increase" | "decrease") {
-        const storage = localStorage.getItem("cart");
-        if (!storage) localStorage.setItem("cart", "[]");
+        const storage = localStorage.getItem("cart") || localStorage.setItem("cart", "[]");
 
         const cart = storage ? JSON.parse(storage) : [];
         const indexCart = cart.findIndex((item: any) => item.id == id);

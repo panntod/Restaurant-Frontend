@@ -22,7 +22,7 @@ export default function Modal({
       method: method,
       body: new FormData(e.target as HTMLFormElement),
     }).then((res) => res.json());
-    if (result.success) {
+    if (result.status) {
       toast.success(`Success ${data ? "update" : "insert"} data`);
       setIsOpenModal(false);
     } else toast.error(result.message);
@@ -49,13 +49,13 @@ export default function Modal({
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Nama Menu
+                  Menu Name
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
-                  placeholder="Nama menu"
+                  placeholder="Name menu"
                   name="name"
                   defaultValue={data?.name}
                   required

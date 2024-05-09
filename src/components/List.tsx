@@ -19,8 +19,7 @@ function Order({
   });
 
   function updateCart(id: number, type: "increase" | "decrease") {
-    const storage = localStorage.getItem("cart");
-    if (!storage) localStorage.setItem("cart", "[]");
+    const storage = localStorage.getItem("cart") ||  localStorage.setItem("cart", "[]");
 
     const cart = storage ? JSON.parse(storage) : [];
     const indexCart = cart.findIndex((item: any) => item.id == id);
@@ -52,8 +51,7 @@ function Order({
 
   function deleteItem(index: number) {
     if (confirm("Apakah Anda yakin ingin menghapus?")) {
-      const storage = localStorage.getItem("cart");
-      if (!storage) localStorage.setItem("cart", "[]");
+      const storage = localStorage.getItem("cart") ||  localStorage.setItem("cart", "[]");
 
       const cart = storage ? JSON.parse(storage) : [];
 
